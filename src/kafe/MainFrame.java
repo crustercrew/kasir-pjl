@@ -159,7 +159,11 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
         jScrollPane2.setViewportView(jTable2);
 
         jButton2.setText("Tambah Pesanan");
-        jButton2.setEnabled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Bayar Sebagian");
         jButton3.setEnabled(false);
@@ -256,7 +260,7 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
         // TODO add your handling code here:
         ambilMeja();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         new MakananFrame().setVisible(true);
@@ -276,10 +280,17 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
         System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
         new BayarSemuaFrame().setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        new TambahPesananFrame().setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     /**
      * @param args the command line arguments
