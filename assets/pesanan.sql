@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 23, 2016 at 06:11 AM
+-- Generation Time: Mar 23, 2016 at 08:34 AM
 -- Server version: 5.6.21
 -- PHP Version: 5.5.19
 
@@ -28,10 +28,11 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `pesanan` (
 `id_pesanan` int(11) NOT NULL,
-  `meja` int(11) NOT NULL,
+  `meja` bigint(11) NOT NULL,
   `waktu` datetime NOT NULL,
   `pemesanan` text NOT NULL COMMENT 'id:qty;id:qty;',
-  `pembayaran` text NOT NULL COMMENT 'id:qty;id:qty;'
+  `pembayaran` text NOT NULL COMMENT 'id:qty;id:qty;',
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

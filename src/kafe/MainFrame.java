@@ -165,7 +165,11 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
         jButton3.setEnabled(false);
 
         jButton4.setText("Bayar Semua");
-        jButton4.setEnabled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -271,6 +275,11 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        new BayarSemuaFrame().setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments

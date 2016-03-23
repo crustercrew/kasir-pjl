@@ -16,7 +16,7 @@ import javax.swing.table.AbstractTableModel;
 public class TableMakananModel1 extends AbstractTableModel{
     private int colnum = 3;
     private int rownum;
-    private String[] colNames = {"ID", "Nama Makanan", "Harga Makanan"};
+    private String[] colNames = {"ID", "MENU", "HARGA"};
     private ArrayList ResultSets;
     
     public TableMakananModel1(ResultSet rs)
