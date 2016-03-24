@@ -38,25 +38,66 @@ public class TambahPesananFrame extends javax.swing.JFrame {
             String sql = "SELECT * FROM makanan";
             ResultSet rs = statement.executeQuery(sql);
 
-            jTable1.getSelectionModel().addListSelectionListener(
-                    new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent event) {
-                    int viewRow = jTable1.getSelectedRow();
-                    if (viewRow < 0) {
-                        //Selection got filtered away.
-                    } else {
-                        txt_id.setText("" + jTable1.getValueAt(viewRow, 0));
-                        txt_nama.setText("" + jTable1.getValueAt(viewRow, 1));
-                        //txt_jumlah.setText("" + jTable1.getValueAt(viewRow, 2));
-                        
-                        //jButton1.setText("Tambah Pesanan");
-                        //jButton3.setEnabled(true);
-                    }
-                }
-            }
-            );
+           jComboBox1.removeAllItems();
+            while (rs.next()){
+               jComboBox1.addItem(rs.getString("nama_makanan"));
             
-            jTable1.setModel(new TableMakananModel1(rs));
+           }
+           
+            rs.close();
+            statement.close();
+            connection.close();
+        } catch (Exception DBException) {
+            //jLabel5.setText("Error : " + DBException);
+        }
+    }
+    
+     private void ambilHarga() {
+        try {
+            Class.forName(driver);
+            Connection connection = DriverManager.getConnection(url, user, pass);
+            Statement statement = connection.createStatement();
+            String sql = "SELECT * FROM makanan WHERE nama_makanan = '"+jComboBox1.getSelectedItem()+"'";
+            ResultSet rs = statement.executeQuery(sql);
+            rs.next();
+            
+            txt_nama.setText(rs.getString("harga_makanan"));
+            
+            rs.close();
+            statement.close();
+            connection.close();
+        } catch (Exception DBException) {
+            //jLabel5.setText("Error : " + DBException);
+        }
+    }
+     
+     private void ambilPesanan() {
+        try {
+            Class.forName(driver);
+            Connection connection = DriverManager.getConnection(url, user, pass);
+            Statement statement = connection.createStatement();
+            String sql = "SELECT * FROM pesanan";
+            ResultSet rs = statement.executeQuery(sql);
+
+//            jTable1.getSelectionModel().addListSelectionListener(
+//                    new ListSelectionListener() {
+//                public void valueChanged(ListSelectionEvent event) {
+//                    int viewRow = jTable1.getSelectedRow();
+//                    if (viewRow < 0) {
+//                        //Selection got filtered away.
+//                    } else {
+//                        txt_id.setText("" + jTable1.getValueAt(viewRow, 0));
+//                        txt_nama.setText("" + jTable1.getValueAt(viewRow, 1));
+//                        txt_harga.setText("" + jTable1.getValueAt(viewRow, 2));
+//                        
+//                        jButton1.setText("Update Makanan");
+//                        jButton3.setEnabled(true);
+//                    }
+//                }
+//            }
+//            );
+
+            jTable1.setModel(new TablePesananModel1(rs));
 
             pack();
 
@@ -67,6 +108,7 @@ public class TambahPesananFrame extends javax.swing.JFrame {
             //jLabel5.setText("Error : " + DBException);
         }
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -81,11 +123,11 @@ public class TambahPesananFrame extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         txt_jumlah = new javax.swing.JTextField();
-        txt_id = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txt_nama = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -107,12 +149,12 @@ public class TambahPesananFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("ID :");
-
-        txt_id.setEditable(false);
+        jLabel1.setText("Nama Makanan :");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel2.setText("Nama Makanan :");
+        jLabel2.setText("Harga :");
+
+        txt_nama.setEditable(false);
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel3.setText("Jumlah Pesanan :");
@@ -121,6 +163,14 @@ public class TambahPesananFrame extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.setEditable(true);
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
             }
         });
 
@@ -183,10 +233,10 @@ public class TambahPesananFrame extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txt_jumlah)
                             .addComponent(txt_nama)
-                            .addComponent(txt_id)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -197,7 +247,7 @@ public class TambahPesananFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -238,6 +288,11 @@ public class TambahPesananFrame extends javax.swing.JFrame {
     
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+        ambilHarga();
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -275,6 +330,7 @@ public class TambahPesananFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -286,7 +342,6 @@ public class TambahPesananFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txt_id;
     private javax.swing.JTextField txt_jumlah;
     private javax.swing.JTextField txt_nama;
     // End of variables declaration//GEN-END:variables
