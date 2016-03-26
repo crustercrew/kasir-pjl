@@ -11,6 +11,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableCellRenderer;
@@ -24,6 +27,9 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
     /**
      * Creates new form MainFrame
      */
+    int id_meja;
+    int id_pesanan;
+    
     public MainFrame() {
         initComponents();
         
@@ -49,6 +55,7 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
         jScrollPane1.setViewportView(jTable1);
         
         ambilMeja();
+        ambilPesanan();
     }
     
     public void ambilMeja() {
@@ -63,14 +70,15 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
                     new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent event) {
                     int viewRow = jTable1.getSelectedRow();
-//                    if (viewRow < 0) {
-//                        //Selection got filtered away
-//                        System.out.println("no selection");
-//                    } else {
-//                        tx_id.setText("" + jTable1.getValueAt(viewRow, 0));
-//                        tx_penerbit.setText("" + jTable1.getValueAt(viewRow, 1));
-//                        tx_kota.setText("" + jTable1.getValueAt(viewRow, 2));
-//                    }
+                    if (viewRow < 0) {
+                        //Selection got filtered away
+                        
+                    } else {
+                        id_meja=Integer.parseInt(""+jTable1.getValueAt(viewRow, 0));
+                        ambilPesanan();
+                        jButton2.setEnabled(true);
+                        tambahPesanan();
+                    }
                 }
             }
             );
@@ -86,7 +94,89 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
             System.err.println("Error : " + DBException);
         }
     }
+    
+        public void tambahPesanan() {
+        try {
+            Class.forName(driver);
+            Connection connection = DriverManager.getConnection(url, user, pass);
+            Statement statement = connection.createStatement();
+            
+            String sql1 = "SELECT id_pesanan FROM pesanan where meja='" + id_meja + "' ORDER BY id_pesanan DESC LIMIT 1;";
+            ResultSet rs = statement.executeQuery(sql1);
+            
+            if(!rs.next()){
+                DateFormat date=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date tgl = new Date();
+                String sql = "INSERT INTO pesanan (meja, waktu) values ('" + id_meja + "', '" + date.format(tgl) + "');";
+                statement.executeUpdate(sql);
+                rs = statement.executeQuery("select last_insert_id() as id_pesanan from pesanan");
+                id_pesanan = Integer.parseInt(rs.getString("id_pesanan"));
+            }
+            else{
+                
+                id_pesanan = Integer.parseInt(rs.getString("id_pesanan"));
+            }
 
+            statement.close();
+            connection.close();
+            
+        } catch (Exception DBException) {
+            //System.out.println("Error : " + DBException);
+        }
+    }
+     
+    private void ambilPesanan() {
+        try {
+            Class.forName(driver);
+            Connection connection = DriverManager.getConnection(url, user, pass);
+            Statement statement = connection.createStatement();
+            String sql = "SELECT isi_pesanan.id_makanan, makanan.nama_makanan, makanan.harga_makanan*isi_pesanan.jumlah_makanan as harga_makanan, jumlah_makanan FROM isi_pesanan INNER JOIN makanan ON makanan.id_makanan=isi_pesanan.id_makanan INNER JOIN pesanan ON pesanan.id_pesanan=isi_pesanan.id_pesanan INNER JOIN meja ON meja.id_meja=pesanan.meja where isi_pesanan.id_pesanan='" + id_pesanan + "' and meja.id_meja='" + id_meja + "';";
+            ResultSet rs = statement.executeQuery(sql);
+
+//            jTable1.getSelectionModel().addListSelectionListener(
+//                    new ListSelectionListener() {
+//                public void valueChanged(ListSelectionEvent event) {
+//                    int viewRow = jTable1.getSelectedRow();
+//                    if (viewRow < 0) {
+//                        //Selection got filtered away.
+//                    } else {
+//                        
+//                    }
+//                }
+//            }
+//            );
+
+            jTable2.setModel(new TablePesananModel(rs));
+
+            pack();
+
+            rs.close();
+            statement.close();
+            connection.close();
+        } catch (Exception DBException) {
+            
+            System.out.println("Error : " + DBException);
+        }
+    }
+    
+        public void updateStatus() {
+        try {
+
+            Class.forName(driver);
+            Connection connection = DriverManager.getConnection(url, user, pass);
+            Statement statement = connection.createStatement();
+
+            String sql = "UPDATE meja SET status_meja='Ditempati' where id_meja='" + id_meja + "'";
+            statement.executeUpdate(sql);
+
+            statement.close();
+            connection.close();
+            
+        } catch (Exception DBException) {
+            System.out.println("Error : " + DBException);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -158,6 +248,7 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
         jScrollPane2.setViewportView(jTable2);
 
         jButton2.setText("Tambah Pesanan");
+        jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -165,6 +256,7 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
         });
 
         jButton4.setText("Bayar Semua");
+        jButton4.setEnabled(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -281,7 +373,9 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        new TambahPesananFrame().setVisible(true);
+        new TambahPesananFrame(id_pesanan).setVisible(true);
+        updateStatus();
+        ambilMeja();
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
