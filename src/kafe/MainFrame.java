@@ -22,17 +22,17 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author Furqan
  */
-public class MainFrame extends javax.swing.JFrame implements Koneksi{
+public class MainFrame extends javax.swing.JFrame implements Koneksi {
 
     /**
      * Creates new form MainFrame
      */
     int id_meja;
     int id_pesanan;
-    
+
     public MainFrame() {
         initComponents();
-        
+
         jTable1 = new javax.swing.JTable() {
             public Component prepareRenderer(TableCellRenderer renderer, int Index_row, int Index_col) {
                 // get the current row
@@ -40,24 +40,23 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
                 // even index, not selected
                 if (!isCellSelected(Index_row, Index_col)) {
                     comp.setBackground(Color.white);
-                }else{
+                } else {
                     comp.setBackground(Color.blue);
                 }
-                
-                if(jTable1.getValueAt(Index_row, 2).equals("Ditempati")){
+
+                if (jTable1.getValueAt(Index_row, 2).equals("Ditempati")) {
                     comp.setBackground(Color.red);
                 }
                 return comp;
             }
         };
-        
+
         jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane1.setViewportView(jTable1);
-        
+
         ambilMeja();
-        ambilPesanan();
     }
-    
+
     public void ambilMeja() {
         try {
             Class.forName(driver);
@@ -72,11 +71,12 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
                     int viewRow = jTable1.getSelectedRow();
                     if (viewRow < 0) {
                         //Selection got filtered away
-                        
+
                     } else {
-                        id_meja=Integer.parseInt(""+jTable1.getValueAt(viewRow, 0));
-                        ambilPesanan();
+                        id_meja = Integer.parseInt("" + jTable1.getValueAt(viewRow, 0));
+
                         jButton2.setEnabled(true);
+                        jButton4.setEnabled(true);
                         tambahPesanan();
                     }
                 }
@@ -84,7 +84,7 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
             );
 
             jTable1.setModel(new TableModel(rs));
-            
+
             pack();
 
             rs.close();
@@ -94,37 +94,37 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
             System.err.println("Error : " + DBException);
         }
     }
-    
-        public void tambahPesanan() {
+
+    public void tambahPesanan() {
         try {
             Class.forName(driver);
             Connection connection = DriverManager.getConnection(url, user, pass);
             Statement statement = connection.createStatement();
-            
-            String sql1 = "SELECT id_pesanan FROM pesanan where meja='" + id_meja + "' ORDER BY id_pesanan DESC LIMIT 1;";
+
+            String sql1 = "SELECT id_pesanan, meja, meja.status_meja as status_meja FROM pesanan INNER JOIN meja ON meja.id_meja=pesanan.meja where meja='" + id_meja + "' ORDER BY id_pesanan DESC LIMIT 1;";
             ResultSet rs = statement.executeQuery(sql1);
-            
-            if(!rs.next()){
-                DateFormat date=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+            if (!rs.next()) {
+                DateFormat date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date tgl = new Date();
                 String sql = "INSERT INTO pesanan (meja, waktu) values ('" + id_meja + "', '" + date.format(tgl) + "');";
                 statement.executeUpdate(sql);
                 rs = statement.executeQuery("select last_insert_id() as id_pesanan from pesanan");
                 id_pesanan = Integer.parseInt(rs.getString("id_pesanan"));
-            }
+            } 
             else{
-                
                 id_pesanan = Integer.parseInt(rs.getString("id_pesanan"));
+                ambilPesanan();
             }
 
             statement.close();
             connection.close();
-            
+
         } catch (Exception DBException) {
-            //System.out.println("Error : " + DBException);
+            System.out.println("Error : " + DBException);
         }
     }
-     
+
     private void ambilPesanan() {
         try {
             Class.forName(driver);
@@ -145,7 +145,6 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
 //                }
 //            }
 //            );
-
             jTable2.setModel(new TablePesananModel(rs));
 
             pack();
@@ -154,12 +153,12 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
             statement.close();
             connection.close();
         } catch (Exception DBException) {
-            
+
             System.out.println("Error : " + DBException);
         }
     }
-    
-        public void updateStatus() {
+
+    public void updateStatus() {
         try {
 
             Class.forName(driver);
@@ -171,12 +170,12 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
 
             statement.close();
             connection.close();
-            
+
         } catch (Exception DBException) {
             System.out.println("Error : " + DBException);
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -345,7 +344,7 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
         // TODO add your handling code here:
         ambilMeja();
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         new MakananFrame().setVisible(true);
@@ -368,7 +367,7 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        new BayarSemuaFrame().setVisible(true);
+        new BayarSemuaFrame(id_pesanan, id_meja).setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -377,7 +376,6 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi{
         updateStatus();
         ambilMeja();
     }//GEN-LAST:event_jButton2ActionPerformed
-
 
     /**
      * @param args the command line arguments

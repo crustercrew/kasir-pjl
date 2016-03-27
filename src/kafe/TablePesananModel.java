@@ -18,6 +18,7 @@ public class TablePesananModel extends AbstractTableModel{
     private int rownum;
     private String[] colNames = {"ID", "Menu", "Jumlah", "Harga"};
     private ArrayList ResultSets;
+    private int total=0;
     
     public TablePesananModel(ResultSet rs)
     {
@@ -31,6 +32,7 @@ public class TablePesananModel extends AbstractTableModel{
                 rs.getString("jumlah_makanan"),
                 rs.getString("harga_makanan")};
                 ResultSets.add(row);
+                total+=Integer.parseInt(rs.getString("harga_makanan"));
             }
         }
         catch(Exception e){
@@ -53,5 +55,9 @@ public class TablePesananModel extends AbstractTableModel{
 
     public String getColumnName(int param){
         return colNames[param];
+    }
+    
+    public int getTotal(){
+        return total;
     }
 }
