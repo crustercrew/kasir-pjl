@@ -14,10 +14,11 @@ import javax.swing.table.AbstractTableModel;
  * @author Furqan
  */
 public class TablePesananModel extends AbstractTableModel{
-    private int colnum = 3;
+    private int colnum = 4;
     private int rownum;
-    private String[] colNames = {"ID", "Nama Meja", "Status"};
+    private String[] colNames = {"ID", "Menu", "Jumlah", "Harga"};
     private ArrayList ResultSets;
+    private int total=0;
     
     public TablePesananModel(ResultSet rs)
     {
@@ -26,10 +27,12 @@ public class TablePesananModel extends AbstractTableModel{
         try{
             while(rs.next()){
                 String[] row = {
-                rs.getString("id_meja"),
-                rs.getString("nama_meja"),
-                rs.getString("status_meja")};
+                rs.getString("id_makanan"),
+                rs.getString("nama_makanan"),
+                rs.getString("jumlah_makanan"),
+                rs.getString("harga_makanan")};
                 ResultSets.add(row);
+                total+=Integer.parseInt(rs.getString("harga_makanan"));
             }
         }
         catch(Exception e){
@@ -52,5 +55,9 @@ public class TablePesananModel extends AbstractTableModel{
 
     public String getColumnName(int param){
         return colNames[param];
+    }
+    
+    public int getTotal(){
+        return total;
     }
 }
