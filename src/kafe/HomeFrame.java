@@ -5,9 +5,13 @@
  */
 package kafe;
 
+import java.awt.Dimension;
 import java.awt.Image;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 
 /**
  *
@@ -16,7 +20,7 @@ import javax.swing.JLabel;
 public class HomeFrame extends javax.swing.JFrame {
 
     //ImageIcon ico = new ImageIcon("kasir.jpg");
-        /**
+    /**
      * Creates new form HomeFrame
      */
     public HomeFrame() {
@@ -24,6 +28,44 @@ public class HomeFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         ImageIcon ico = new ImageIcon(new ImageIcon(getClass().getResource("kasir.jpg")).getImage().getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_DEFAULT));
         jLabel1.setIcon(ico);
+        
+        this.setLayout(null);
+        
+        progress = new JProgressBar();
+        progress.setPreferredSize(new Dimension(300, 20));
+        progress.setMinimum(0);
+        progress.setMaximum(100);
+        progress.setValue(0);
+        progress.setBounds(120, 350, 260, 20);
+        this.add(progress);
+        
+        jLabel2.setBounds(210, 330, 260, 20);
+        this.add(jLabel2);
+        
+        this.add(jLabel1);
+       
+        loading();
+    }
+
+    private void loading() {
+        Thread a = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    for(int i = 0; i <= 100; i++){
+                        progress.setValue(i);
+                        jLabel2.setText("Loading " + i + "%");
+                        Thread.sleep(20);
+                    }
+
+                    new MainFrame().setVisible(true);
+                    HomeFrame.this.setVisible(false);
+                } catch (InterruptedException ex) {
+                }
+
+            }
+        });
+        a.start();
     }
 
     /**
@@ -35,24 +77,28 @@ public class HomeFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+
+        jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home");
         setBackground(new java.awt.Color(153, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setPreferredSize(new java.awt.Dimension(500, 500));
         setResizable(false);
+
+        jLabel1.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -95,5 +141,7 @@ public class HomeFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
+private JProgressBar progress;
 }
