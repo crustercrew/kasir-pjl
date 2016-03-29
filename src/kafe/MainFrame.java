@@ -53,7 +53,7 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi {
 
         jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jScrollPane1.setViewportView(jTable1);
-
+        
         ambilMeja();
     }
 
@@ -202,6 +202,7 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kasir Kafe");
 
+        jTable1.setBackground(new java.awt.Color(255, 255, 153));
         jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -221,6 +222,8 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jButton1.setBackground(new java.awt.Color(255, 204, 102));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kafe/refresh.png"))); // NOI18N
         jButton1.setText("Refresh Meja");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,14 +249,19 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi {
         });
         jScrollPane2.setViewportView(jTable2);
 
+        jButton2.setBackground(new java.awt.Color(255, 204, 102));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kafe/add.png"))); // NOI18N
         jButton2.setText("Tambah Pesanan");
         jButton2.setEnabled(false);
+        jButton2.setPreferredSize(new java.awt.Dimension(135, 26));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
+        jButton4.setBackground(new java.awt.Color(255, 204, 102));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kafe/dolar.png"))); // NOI18N
         jButton4.setText("Bayar Semua");
         jButton4.setEnabled(false);
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -261,6 +269,8 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi {
                 jButton4ActionPerformed(evt);
             }
         });
+
+        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
 
         jMenu1.setText("File");
 
@@ -327,13 +337,14 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton1)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12))
         );
 

@@ -146,10 +146,12 @@ public class BayarSemuaFrame extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
 
         setTitle("Bayar");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Daftar Pesanan Anda");
 
+        jTable1.setBackground(new java.awt.Color(255, 255, 204));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -173,6 +175,7 @@ public class BayarSemuaFrame extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         txt_total.setEditable(false);
+        txt_total.setBackground(new java.awt.Color(242, 242, 189));
         txt_total.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_totalActionPerformed(evt);
@@ -188,28 +191,42 @@ public class BayarSemuaFrame extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabel4.setText("Kembalian :");
 
-        txt_kembali.setEditable(false);
+        txt_uang.setBackground(new java.awt.Color(255, 255, 218));
 
+        txt_kembali.setEditable(false);
+        txt_kembali.setBackground(new java.awt.Color(240, 240, 193));
+
+        jButton1.setBackground(new java.awt.Color(255, 204, 102));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kafe/dolar.png"))); // NOI18N
         jButton1.setText("Bayar");
+        jButton1.setMaximumSize(new java.awt.Dimension(61, 26));
+        jButton1.setMinimumSize(new java.awt.Dimension(61, 26));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(255, 204, 102));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/kafe/refresh.png"))); // NOI18N
         jButton2.setText("Cancel");
+        jButton2.setMaximumSize(new java.awt.Dimension(83, 25));
+        jButton2.setMinimumSize(new java.awt.Dimension(83, 25));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(255, 204, 102));
         jButton3.setText("Cek");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
+
+        jMenuBar1.setBackground(new java.awt.Color(0, 204, 255));
 
         jMenu1.setText("File");
 
@@ -279,10 +296,10 @@ public class BayarSemuaFrame extends javax.swing.JFrame {
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton2))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(txt_kembali, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -295,7 +312,7 @@ public class BayarSemuaFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_total, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -309,11 +326,11 @@ public class BayarSemuaFrame extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(txt_kembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
-                .addGap(20, 20, 20)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addContainerGap(149, Short.MAX_VALUE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -338,11 +355,16 @@ public class BayarSemuaFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu2ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-//        int tot = Integer.parseInt(txt_total.getText());
-//        int uang = Integer.parseInt(txt_uang.getText());
-        
+        //        int tot = Integer.parseInt(txt_total.getText());
+        //        int uang = Integer.parseInt(txt_uang.getText());
+
         if(txt_uang.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Masukkan Uang Terlebih Dahulu");
         }
@@ -351,28 +373,23 @@ public class BayarSemuaFrame extends javax.swing.JFrame {
         }
         else{
             if (JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin membayar semua pesanan?", "Bayar Semua",
-            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-                bayarPesanan();
-                
-                JOptionPane.showMessageDialog(this, "Pesanan Berhasil Dibayar");
-                this.setVisible(false);
-            }           
-        } 
+                JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            bayarPesanan();
+
+            JOptionPane.showMessageDialog(this, "Pesanan Berhasil Dibayar");
+            this.setVisible(false);
+        }
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void txt_totalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_totalActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_totalActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        setVisible(false);
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         ambilKembalian();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void txt_totalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_totalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_totalActionPerformed
 
     /**
      * @param args the command line arguments
