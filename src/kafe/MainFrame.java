@@ -96,7 +96,7 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi {
             statement.close();
             connection.close();
         } catch (Exception DBException) {
-            //System.err.println("Error : " + DBException);
+            System.err.println("Error : " + DBException);
         }
     }
 
@@ -118,8 +118,6 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi {
                 id_pesanan = Integer.parseInt(rs.getString("id_pesanan"));
             } 
             else{
-                System.out.println(rs.getString("status_meja"));
-                
                 id_pesanan = Integer.parseInt(rs.getString("id_pesanan"));
                 ambilPesanan();
             }
@@ -128,7 +126,7 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi {
             connection.close();
 
         } catch (Exception DBException) {
-            ///System.out.println("Error : " + DBException);
+            System.out.println("Error : " + DBException);
         }
     }
 
@@ -140,6 +138,18 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi {
             String sql = "SELECT isi_pesanan.id_makanan, makanan.nama_makanan, makanan.harga_makanan*isi_pesanan.jumlah_makanan as harga_makanan, jumlah_makanan FROM isi_pesanan INNER JOIN makanan ON makanan.id_makanan=isi_pesanan.id_makanan INNER JOIN pesanan ON pesanan.id_pesanan=isi_pesanan.id_pesanan INNER JOIN meja ON meja.id_meja=pesanan.meja where isi_pesanan.id_pesanan='" + id_pesanan + "' and meja.id_meja='" + id_meja + "';";
             ResultSet rs = statement.executeQuery(sql);
 
+//            jTable1.getSelectionModel().addListSelectionListener(
+//                    new ListSelectionListener() {
+//                public void valueChanged(ListSelectionEvent event) {
+//                    int viewRow = jTable1.getSelectedRow();
+//                    if (viewRow < 0) {
+//                        //Selection got filtered away.
+//                    } else {
+//                        
+//                    }
+//                }
+//            }
+//            );
             jTable2.setModel(new TablePesananModel(rs));
 
             pack();
@@ -149,7 +159,7 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi {
             connection.close();
         } catch (Exception DBException) {
 
-            //System.out.println("Error : " + DBException);
+            System.out.println("Error : " + DBException);
         }
     }
 
@@ -167,7 +177,7 @@ public class MainFrame extends javax.swing.JFrame implements Koneksi {
             connection.close();
 
         } catch (Exception DBException) {
-            //System.out.println("Error : " + DBException);
+            System.out.println("Error : " + DBException);
         }
     }
 
