@@ -17,6 +17,7 @@ import javax.swing.event.ListSelectionListener;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import java.io.FileOutputStream;
+import java.net.URL;
 import javax.swing.ImageIcon;
 /*############## IMPORT TAMBAHAN UNTUK KEPENTINGAN PDF ITEXT ############*/
 
@@ -126,8 +127,10 @@ public class BayarSemuaFrame extends javax.swing.JFrame {
             connection.close();
             
 /*#################################################  BUAT PDF DENGAN ITEXT PDF  ##################################################*/
+            URL location = BayarSemuaFrame.class.getProtectionDomain().getCodeSource().getLocation();
+            
             Document document = new Document();
-            String FILE = "C:/Users/Ichsan/Documents/NetBeansProjects/kasir-pjl/bill_"+id_pesanan+".pdf";    
+            String FILE = location.getFile() + "/bill_"+id_pesanan+".pdf";    
             PdfWriter.getInstance(document, new FileOutputStream(FILE));
             document.open();
             addContent(document,Integer.toString(id_pesanan),txt_uang.getText(),txt_kembali.getText());

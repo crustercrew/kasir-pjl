@@ -112,7 +112,7 @@ public class TambahPesananFrame extends javax.swing.JFrame {
             
             //ambilMakanan();
         } catch (Exception DBException) {
-            System.out.println("Error : " + DBException);
+            //System.out.println("Error : " + DBException);
         }
     }
     
@@ -153,7 +153,7 @@ public class TambahPesananFrame extends javax.swing.JFrame {
             connection.close();
         } catch (Exception DBException) {
             
-            System.out.println("Error : " + DBException);
+            //System.out.println("Error : " + DBException);
         }
     }
 
@@ -174,7 +174,7 @@ public class TambahPesananFrame extends javax.swing.JFrame {
             
             ambilPesanan();
         } catch (Exception DBException) {
-            System.out.println("Error : " + DBException);
+            //System.out.println("Error : " + DBException);
         }
     }
          
@@ -195,7 +195,7 @@ public class TambahPesananFrame extends javax.swing.JFrame {
             //jButton1.setText("Simpan Makanan");
             ambilPesanan();
         } catch (Exception DBException) {
-            System.out.println("Error : " + DBException);
+           // System.out.println("Error : " + DBException);
         }
     }
 
